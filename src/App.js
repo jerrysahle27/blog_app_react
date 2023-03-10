@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Login from "./components/auth/Login"
+import Login from "./components/auth/Login";
 function App() {
   return (
     // <Provider store={store}>
@@ -8,7 +8,7 @@ function App() {
       <div>
         {/* <Navbar /> */}
         <Routes>
-        <Route exact path="/login" element={<Login />}/>
+          <Route exact path="/login" element={<Login />} />
           {/* <Route exact path="/" element={<Landing />} /> */}
           {/* <div className="container"> */}
           {/* <Route exact path="/register" element={<Register />} />
