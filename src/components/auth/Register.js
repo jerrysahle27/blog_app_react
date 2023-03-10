@@ -1,24 +1,25 @@
-import * as React from "react";
-// import { LockClosedIcon } from '@heroicons/react/20/solid'
-import { useState, useEffect } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useLoginUserMutation } from "../api/apiSlice";
-const theme = createTheme();
+import React from "react";
 
-export default function Login() {
+import { useState, useEffect } from "react";
+export default function Register() {
+  console.log("I am right here")
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginUser, { isSuccess, isError }] = useLoginUserMutation();
+  const [password2, setPassword2] = useState("");
+  // const [loginUser, { isSuccess, isError }] = useLoginUserMutation();
   const handleSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      await loginUser({ email, password }).unwrap();
-      setEmail("");
-      setPassword("");
-    } catch (err) {
-      console.error("Invalid username or password");
-    }
+    //   try {
+    //     event.preventDefault();
+    //     await loginUser({ email, password }).unwrap();
+    //     setEmail("");
+    //     setPassword("");
+    //   } catch (err) {
+    //     console.error("Invalid username or password");
+    //   }
   };
+  const onNameChange = (e) => setName(e.target.value);
+  const onConfirmPasswordCahnge = (e) => setPassword2(e.target.value);
   const onEmailChanged = (e) => setEmail(e.target.value);
   const onPasswordChanged = (e) => setPassword(e.target.value);
 
@@ -32,12 +33,28 @@ export default function Login() {
             alt="Your Company"
           />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Log in to your account
+            Create your account
           </h2>
         </div>
         <form className="mt-8 space-y-6" action="#" method="POST">
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="space-y-2 rounded-md shadow-sm">
+            <div>
+              <label htmlFor="email-address" className="sr-only">
+                Name
+              </label>
+              <input
+                id="email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="relative block w-full rounded-t-md border-0 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                placeholder="Enter Your Email address"
+                onChange={onNameChange}
+                value={name}
+              />
+            </div>
             <div>
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -54,7 +71,7 @@ export default function Login() {
                 value={email}
               />
             </div>
-            <div className="mt-5">
+            <div>
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
@@ -66,35 +83,25 @@ export default function Login() {
                 autoComplete="current-password"
                 required
                 className="relative block w-full rounded-b-md border-0 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Enter Your Password"
+                placeholder="Enter your password"
                 onChange={onPasswordChanged}
               />
             </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 rounded border-indigo-300 text-indigo-600 focus:ring-indigo-600"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-indigo-900"
-              >
-                Remember me
+            <div>
+              <label htmlFor="email-address" className="sr-only">
+                Confirm Password
               </label>
-            </div>
-
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </a>
+              <input
+                id="password2"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="relative block w-full rounded-t-md border-0 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                placeholder="Confirm your password "
+                onChange={onConfirmPasswordCahnge}
+                value={password2}
+              />
             </div>
           </div>
 
@@ -106,20 +113,12 @@ export default function Login() {
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 {/* <LockClosedIcon
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  aria-hidden="true"
-                /> */}
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    aria-hidden="true"
+                  /> */}
               </span>
-              Sign In
+              Sign Up
             </button>
-            <div className="text-sm">
-              <a
-                href="/register"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Are you new user?
-              </a>
-            </div>
           </div>
         </form>
       </div>
