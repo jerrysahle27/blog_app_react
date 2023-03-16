@@ -3,14 +3,19 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   tagTypes: ["User"],
-  baseQuery: fetchBaseQuery({
-    // Fill in your own server starting URL here
-    url: "http://localhost:5000/",
-  }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (userData) => ({
-        url: "api/users/login",
+        url: "/api/users/login",
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    registerUser: builder.mutation({
+      query: (userData) => ({
+        url: "/api/users/register",
         method: "POST",
         body: userData,
       }),
@@ -18,4 +23,4 @@ export const apiSlice = createApi({
     }),
   }),
 });
-export const { useLoginUserMutation } = apiSlice;
+export const { useLoginUserMutation,useRegisterUserMutation } = apiSlice;
