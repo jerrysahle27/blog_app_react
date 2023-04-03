@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "./components/auth/Login";
 import NotFoundPage from "./error-page/NotFoundPage";
-import Register from "./components/auth/Register";
-import Home from "./components/layout/Home";
+// import Register from "./components/auth/Register";
+// import Home from "./components/layout/Home";
 import PostsList from "./components/posts/PostsList";
 
 const router = createBrowserRouter([
@@ -11,22 +11,22 @@ const router = createBrowserRouter([
     element: <Login />,
     errorElement: <NotFoundPage />,
   },
-  {
-    path: "/register",
-    element: <Register />,
-    errorElement: <NotFoundPage />,
-  },
-  {
-    path: "/home",
-    element: <Home />,
-    errorElement: <NotFoundPage />,
-    children: [
-      {
-        path: "/home/posts",
-        element: <PostsList />,
-      },
-    ],
-  },
+  // {
+  //   path: "/register",
+  //   element: <Register />,
+  //   errorElement: <NotFoundPage />,
+  // },
+  // {
+  //   path: "/home",
+  //   element: <Home />,
+  //   errorElement: <NotFoundPage />,
+  //   children: [
+  //     {
+  //       path: "/home/posts",
+  //       element: <PostsList />,
+  //     },
+  //   ],
+  // },
 ]);
 
 export default router;

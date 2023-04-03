@@ -54,7 +54,28 @@ export const Login = () => {
   });
   return (
     <Box>
-      <div className="container mx-auto bg-indigo-300">
+      <div className="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
+        <form onSubmit={onSubmit}>
+          <label className="block">
+            <span> Email</span>
+            <Input {...register("email")} placeholder="Email" />
+            {errors?.email && <p>{errors.email.message}</p>}
+          </label>
+
+          <div>
+            <label>Password</label>
+            <Input {...register("password")} placeholder="Password" />
+          </div>
+
+          <button
+            type="submit"
+            className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+      {/* <div className="container mx-auto bg-indigo-300">
         <div className="object-cover h-100 w-96 ">
           <Card variant="outlined">
             <form onSubmit={onSubmit}>
@@ -79,7 +100,7 @@ export const Login = () => {
             </form>
           </Card>
         </div>
-      </div>
+      </div> */}
     </Box>
   );
 };
