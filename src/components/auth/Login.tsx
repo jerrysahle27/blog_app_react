@@ -8,10 +8,13 @@ import {
   Card,
   CardActions,
   CardContent,
+  Avatar,
   TextField,
   Box,
 } from "@mui/material";
 import { useForm, Resolver } from "react-hook-form";
+
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ProtectedComponent } from "../ProtectedComponent";
 import { useLoginUserMutation } from "../../app/services/auth/auth";
 import type { LoginRequest } from "../../app/services/auth/auth";
@@ -55,6 +58,23 @@ export const Login = () => {
   });
   return (
     <Box>
+      <div>
+        <Avatar className="mx-auto h-12 w-auto">
+          <LockOutlinedIcon />
+        </Avatar>
+        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-500">
+          Sign in to your account
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Or{" "}
+          <a
+            href="#"
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+          >
+            create your account
+          </a>
+        </p>
+      </div>
       <div className="px-4 py-12 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-white rounded-xl shadow-lg flex items-center space-x-4">
         <form onSubmit={onSubmit}>
           {/* <label className="block">
