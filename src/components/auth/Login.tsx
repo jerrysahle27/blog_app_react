@@ -8,6 +8,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  TextField,
   Box,
 } from "@mui/material";
 import { useForm, Resolver } from "react-hook-form";
@@ -54,25 +55,56 @@ export const Login = () => {
   });
   return (
     <Box>
-      <div className="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
+      <div className="px-4 py-12 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-white rounded-xl shadow-lg flex items-center space-x-4">
         <form onSubmit={onSubmit}>
-          <label className="block">
+          {/* <label className="block">
             <span> Email</span>
             <Input {...register("email")} placeholder="Email" />
             {errors?.email && <p>{errors.email.message}</p>}
-          </label>
-
-          <div>
+          </label> */}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            // name="email"
+            autoComplete="email"
+            autoFocus
+            {...register("email")}
+          />
+          {errors?.email && <p>{errors.email.message}</p>}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Password"
+            // name="email"
+            autoComplete="password"
+            autoFocus
+            {...register("password")}
+          />
+          {errors?.password && <p>{errors.password.message}</p>}
+          {/* <div>
             <label>Password</label>
             <Input {...register("password")} placeholder="Password" />
-          </div>
-
-          <button
+          </div> */}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            // className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+          >
+            Sign In
+          </Button>
+          {/* <button
             type="submit"
             className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
           >
             Submit
-          </button>
+          </button> */}
         </form>
       </div>
       {/* <div className="container mx-auto bg-indigo-300">
