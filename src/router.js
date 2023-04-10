@@ -4,6 +4,7 @@ import NotFoundPage from "./error-page/NotFoundPage";
 import Register from "./components/auth/Register";
 // import Home from "./components/layout/Home";
 import PostsList from "./components/posts/PostsList";
+import ProtectedComponent from "./components/ProtectedComponent";
 
 const router = createBrowserRouter([
   {
@@ -16,17 +17,17 @@ const router = createBrowserRouter([
     element: <Register />,
     errorElement: <NotFoundPage />,
   },
-  // {
-  //   path: "/home",
-  //   element: <Home />,
-  //   errorElement: <NotFoundPage />,
-  //   children: [
-  //     {
-  //       path: "/home/posts",
-  //       element: <PostsList />,
-  //     },
-  //   ],
-  // },
+  {
+    path: "/home",
+    element: <ProtectedComponent />,
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: "/home/posts",
+        element: <PostsList />,
+      },
+    ],
+  },
 ]);
 
 export default router;

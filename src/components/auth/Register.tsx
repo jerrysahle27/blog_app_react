@@ -2,11 +2,31 @@ import { Avatar, Box, Button, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AccountCircleRounded } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useRegisterUserMutation,
+  UserRequest,
+  UserResponse,
+} from "../../app/services/auth/auth";
 
 const Register = () => {
-  const { handleSubmit, control, getValues } = useForm();
-  const onSubmit = handleSubmit(async () => {});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [register, { isLoading, isSuccess, isError }] =
+    useRegisterUserMutation();
+  const { handleSubmit, control, getValues } = useForm<UserRequest>();
+  const onSubmit = handleSubmit(async () => {
+    try {
+      console.log(getValues());
+      const user = await register(getValues()).unwrap();
+      if (isSuccess == true) {
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
   return (
     <Box>
       <div className="px-4 py-32 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-white rounded-xl shadow-lg hover:shadow-2xl items-center">
@@ -72,19 +92,19 @@ const Register = () => {
             )}
           />
           <Controller
-            name={"confirmpassword"}
+            name={"password2"}
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
                 type="password"
                 margin="normal"
-                id="confirmpassword"
+                id="password2"
                 required
                 fullWidth
                 onChange={onChange}
                 value={value}
                 label="Confirm Password"
-                autoComplete="confirmpassword"
+                autoComplete="password2"
                 autoFocus
               />
             )}
