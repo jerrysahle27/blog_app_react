@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { Button, Avatar, TextField, Box } from "@mui/material";
 import { useForm, Resolver, Controller } from "react-hook-form";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import ProtectedComponent from "../ProtectedComponent";
 import { useLoginUserMutation } from "../../app/services/auth/auth";
 import type { LoginRequest } from "../../app/services/auth/auth";
@@ -49,7 +49,7 @@ export const Login = () => {
       <div className="px-4 py-32 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-white rounded-xl shadow-lg hover:shadow-2xl items-center">
         <div className="relative">
           <Avatar className="mx-auto h-12 w-auto ">
-            <LockOutlinedIcon />
+            {/* <LockOutlinedIcon /> */}
           </Avatar>
           <h2 className="mt-6 text-center text-sm font-bold tracking-tight text-blue-500">
             Sign in to your account

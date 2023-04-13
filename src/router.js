@@ -4,7 +4,7 @@ import NotFoundPage from "./error-page/NotFoundPage";
 import Register from "./components/auth/Register";
 // import Home from "./components/layout/Home";
 import PostsList from "./components/posts/PostsList";
-import ProtectedComponent from "./components/ProtectedComponent";
+import Home from './components/layout/Home'
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <ProtectedComponent />,
+    element: <Home />,
     errorElement: <NotFoundPage />,
     children: [
       {
