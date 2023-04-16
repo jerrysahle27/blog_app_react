@@ -19,6 +19,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
+
 export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
