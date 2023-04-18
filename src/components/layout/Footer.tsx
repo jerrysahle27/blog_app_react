@@ -1,49 +1,33 @@
-import * as React from "react";
-import { Typography, Container, Link, Box, CssBaseline } from "@mui/material";
+import React, { FC, ReactElement } from "react";
+import { Box, Container, Grid, Typography } from "@mui/material";
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        {/* Your Website */}
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-export default function Footer() {
+export const Footer: FC = (): ReactElement => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: 128,
+        width: "100%",
+        height: "auto",
+        backgroundColor: "primary.main",
+        paddingTop: "1rem",
+        paddingBottom: "1rem",
       }}
     >
-      <CssBaseline />
-      <Box
-        component="footer"
-        sx={{
-          py: 3,
-          px: 2,
-          mt: "auto",
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[200]
-              : theme.palette.grey[800],
-        }}
-      >
-        <Container maxWidth="sm">
-          <Typography variant="body1">
-            Social Network Site for developers.
-          </Typography>
-          <Copyright />
-        </Container>
-      </Box>
+      <Container maxWidth="lg">
+        <Grid container direction="column" alignItems="center">
+          <Grid item xs={12}>
+            <Typography color="black" variant="h5">
+              
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography color="white" variant="subtitle1">
+              {`@${new Date().getFullYear()}`}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
     </Box>
   );
-}
+};
+
+export default Footer;
