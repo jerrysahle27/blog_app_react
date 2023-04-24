@@ -80,11 +80,11 @@ export default function PostsList() {
                   // href={post.href}
                   >
                     <span className="absolute inset-0" />
-                    {/* {post.name} */}
+                    {post.title}
                   </a>
                 </h3>
                 <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                  {post.text}
+                  {post.description}
                 </p>
               </div>
               <div className="relative mt-8 flex items-center gap-x-4">
@@ -96,7 +96,6 @@ export default function PostsList() {
                 <div className="text-sm leading-6">
                   <p className="font-semibold text-gray-900">
                     <a
-                    // href={post.author.href}
                     >
                       <span className="absolute inset-0" />
                       {post.user.name}

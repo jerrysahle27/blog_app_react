@@ -1,16 +1,18 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Footer from './Footer'
-import PostsList from '../posts/PostsList'
+import React from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import PostsList from "../posts/PostsList";
+import PostHeader from "../posts/PostHeader";
 
 const Home = () => {
   return (
     <>
-      <Navbar/>
-       <PostsList/>
-      <Footer/>
+      <Navbar />
+      <PostHeader />
+      <PostsList />
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
