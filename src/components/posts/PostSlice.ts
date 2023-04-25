@@ -1,13 +1,10 @@
-import { type } from "@testing-library/user-event/dist/type";
 import { api } from "../../app/services/auth/auth";
 
 type Post = {
   id: string;
   title: string;
-  description:string;
-  // name: string;
-  avatar: string;
-  date: string,
+  description: string;
+  date: string;
   category: {
     title: string;
   };
@@ -17,20 +14,20 @@ type Post = {
     avatar: string;
   };
 };
-type PostCategory ={
-  id:string;
-  title: string
-}
 type PostsResponse = Post[];
-type PostCategoryResponse = PostCategory[];
+type PostCategorys = {
+  id: string;
+  title: string;
+};
+type PostCategoryResponse = PostCategorys[];
 export const PostSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<PostsResponse, void>({
       query: () => "/api/posts",
     }),
-    getPostCategorys:builder.query<PostCategoryResponse,void>({
+    getPostCategorys: builder.query<PostCategoryResponse, void>({
       query: () => "/api/postcategorys",
-    })
+    }),
   }),
 });
-export const { useGetPostsQuery,useGetPostCategorysQuery } = PostSlice;
+export const { useGetPostsQuery, useGetPostCategorysQuery } = PostSlice;

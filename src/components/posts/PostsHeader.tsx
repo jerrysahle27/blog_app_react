@@ -8,31 +8,30 @@ const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export default function PostHeader() {
+export default function PostsHeader() {
   const {
-    data: Categories = [],
+    data: categorys = [],
     isLoading,
     isSuccess,
     isError,
     error,
   } = useGetPostCategorysQuery();
+
   return (
     <Paper
       sx={{
         display: "flex",
+        justifyContent: "center",
         flexWrap: "wrap",
         listStyle: "none",
-        justifyContent: "center",
-        p: 0.5,
-        m: 1,
+        // p: 10.5,
+        // m: 0,
       }}
-      elevation={0}
-      component="ul"
     >
-      {Categories.map((data) => {
+      {categorys.map((data) => {
         return (
           <ListItem key={data.id}>
-            <Chip label={data.title} color="primary" />
+            <Chip label={data.title} />
           </ListItem>
         );
       })}

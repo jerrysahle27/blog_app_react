@@ -2,13 +2,13 @@ import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import PostsList from "../posts/PostsList";
-import PostHeader from "../posts/PostHeader";
+import PostsHeader from "../posts/PostsHeader";
 
 const Home = () => {
   return (
     <>
       <Navbar />
-      <PostHeader />
+      <PostsHeader />
       <PostsList />
       <Footer />
     </>

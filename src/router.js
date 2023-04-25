@@ -4,7 +4,7 @@ import NotFoundPage from "./error-page/NotFoundPage";
 import Register from "./components/auth/Register";
 // import Home from "./components/layout/Home";
 import PostsList from "./components/posts/PostsList";
-import Home from './components/layout/Home'
+import Home from "./components/layout/Home";
 
 const router = createBrowserRouter([
   {

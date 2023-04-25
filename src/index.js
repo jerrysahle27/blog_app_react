@@ -6,9 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { store } from "./app/store";
 import router from "./router";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") 
-);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
