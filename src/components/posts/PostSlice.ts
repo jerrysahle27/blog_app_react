@@ -20,6 +20,8 @@ type PostCategorys = {
   title: string;
 };
 type PostCategoryResponse = PostCategorys[];
+
+
 export const PostSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<PostsResponse, void>({
