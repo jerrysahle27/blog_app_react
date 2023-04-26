@@ -40,10 +40,19 @@ export default function PostsHeader() {
         );
       })}
       <div className="justify-self-end">
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleClickOpen}>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={handleClickOpen}
+        >
           New Post Category
         </Button>
       </div>
+      <AddPostCategory
+        open={open}
+        setOpen={setOpen}
+        handleClickOpen={handleClickOpen}
+      />
     </Paper>
   );
 }
