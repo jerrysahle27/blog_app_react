@@ -19,17 +19,29 @@ type PostCategorys = {
   id: string;
   title: string;
 };
-type PostCategoryResponse = PostCategorys[];
-
+type PostCategoryListResponse = PostCategorys[];
+export interface PostCategoryRequest {
+  title: string;
+}
+export interface PostCategoryResponse {
+  title: string;
+}
 
 export const PostSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<PostsResponse, void>({
       query: () => "/api/posts",
     }),
-    getPostCategorys: builder.query<PostCategoryResponse, void>({
+    getPostCategorys: builder.query<PostCategoryListResponse, void>({
       query: () => "/api/postcategorys",
+    }),
+    AddPostCategory: builder.mutation<PostCategoryResponse, PostCategoryRequest>({
+      query: (postData) => ({
+        url: "/api/postcategorys",
+        method: "POST",
+        body: postData,
+      }),
     }),
   }),
 });
-export const { useGetPostsQuery, useGetPostCategorysQuery } = PostSlice;
+export const { useGetPostsQuery, useGetPostCategorysQuery,useAddPostCategoryMutation } = PostSlice;

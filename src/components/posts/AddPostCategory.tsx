@@ -7,9 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { useForm, Resolver, Controller } from "react-hook-form";
+import { useAddPostCategoryMutation, PostCategoryRequest } from "./PostSlice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -55,14 +55,15 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export default function AddPostCategory(props: DialogProps) {
-  const { handleSubmit, control, getValues } = useForm();
+  const { handleSubmit, control, getValues } = useForm<PostCategoryRequest>();
+  const [AddPostCategory, { isLoading }] = useAddPostCategoryMutation();
   const handleClose = () => {
     props.setOpen(false);
   };
   const onSubmit = handleSubmit(async () => {
     try {
       console.log(getValues());
-      // const user = await login(getValues()).unwrap();
+      const category = await AddPostCategory(getValues()).unwrap();
     } catch (err) {
       console.error(err);
     }

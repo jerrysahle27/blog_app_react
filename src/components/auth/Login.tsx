@@ -25,7 +25,7 @@ export const Login = () => {
         : {},
     };
   };
-  const [login, { isLoading }] = useLoginUserMutation();
+  const [login, { isLoading,isSuccess }] = useLoginUserMutation();
   const {
     handleSubmit,
     control,
@@ -39,6 +39,7 @@ export const Login = () => {
       console.log(getValues());
       const user = await login(getValues()).unwrap();
       dispatch(setCredentials(user));
+      console.log(isSuccess);
       navigate("/home");
     } catch (err) {
       console.error(err);
