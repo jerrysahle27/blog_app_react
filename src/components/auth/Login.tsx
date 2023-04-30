@@ -5,9 +5,8 @@ import { setCredentials } from "./authSlice";
 import { Button, Avatar, TextField, Box } from "@mui/material";
 import { useForm, Resolver, Controller } from "react-hook-form";
 // import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import ProtectedComponent from "../ProtectedComponent";
-import { useLoginUserMutation } from "../../app/services/auth/auth";
-import type { LoginRequest } from "../../app/services/auth/auth";
+import { useLoginUserMutation } from "../../app/services/api";
+import type { LoginRequest } from "../../app/services/api";
 
 export const Login = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Paper, Chip, Button } from "@mui/material";
-import { useGetPostCategorysQuery } from "./PostSlice";
-import AddPostCategory from "./AddPostCategory";
+import { useGetPostCategorysQuery } from "../../app/services/api";
 import AddIcon from "@mui/icons-material/Add";
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -25,7 +24,7 @@ export default function PostsHeader() {
     <Paper
       sx={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "center",
         flexWrap: "wrap",
         listStyle: "none",
         p: 1.5,
@@ -40,19 +39,19 @@ export default function PostsHeader() {
         );
       })}
       <div className="justify-self-end">
-        <Button
+        {/* <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={handleClickOpen}
         >
           New Post Category
-        </Button>
+        </Button> */}
       </div>
-      <AddPostCategory
+      {/* <AddPostCategory
         open={open}
         setOpen={setOpen}
         handleClickOpen={handleClickOpen}
-      />
+      /> */}
     </Paper>
   );
 }

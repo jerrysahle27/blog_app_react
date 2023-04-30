@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../../store";
+import { RootState } from "../store";
 
 export interface UserRequest {
   name: string;
@@ -8,7 +8,7 @@ export interface UserRequest {
   password2: string;
 }
 export interface UserResponse {
-  success:boolean;
+  success: boolean;
   user: {};
 }
 export interface LoginResponse {
@@ -19,6 +19,11 @@ export interface LoginRequest {
   email: string;
   password: string;
 }
+type PostCategorys = {
+  id: string;
+  title: string;
+};
+type PostCategoryListResponse = PostCategorys[];
 export const api = createApi({
   reducerPath: "api",
   tagTypes: ["User"],
@@ -27,8 +32,9 @@ export const api = createApi({
     prepareHeaders: (headers, { getState }) => {
       // By default, if we have a token in the store, let's use that for authenticated requests
       const token = (getState() as RootState).auth.token;
+      console.log(token);
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("authorization", `${token}`);
       }
       return headers;
     },
@@ -42,11 +48,11 @@ export const api = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    protected: builder.mutation<{ message: String }, void>({
-      query: () => "Protected",
+    getPostCategorys: builder.query<PostCategoryListResponse, void>({
+      query: () => "/api/postcategorys",
     }),
-    registerUser: builder.mutation<UserResponse,UserRequest>({
-      query:(userData) => ({
+    registerUser: builder.mutation<UserResponse, UserRequest>({
+      query: (userData) => ({
         url: "/api/users/register",
         method: "POST",
         body: userData,
@@ -55,4 +61,8 @@ export const api = createApi({
     }),
   }),
 });
-export const { useLoginUserMutation, useProtectedMutation,useRegisterUserMutation } = api;
+export const {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useGetPostCategorysQuery,
+} = api;

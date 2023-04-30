@@ -8,7 +8,7 @@ import {
   useRegisterUserMutation,
   UserRequest,
   UserResponse,
-} from "../../app/services/auth/auth";
+} from "../../app/services/api";
 
 const Register = () => {
   const dispatch = useDispatch();
