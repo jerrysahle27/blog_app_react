@@ -10,9 +10,20 @@ import { Controller, Resolver, useForm } from "react-hook-form";
 import { Post, addNewPost } from "./postsSlice";
 import { useGetPostCategorysQuery } from "../../app/services/api";
 import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function AddPost(props: DialogProps) {
   const { data: postCategoryList = [] } = useGetPostCategorysQuery();
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
   const dispatch = useAppDispatch();
   const resolver: Resolver<Post> = async (values) => {
     return {
@@ -51,7 +62,25 @@ export default function AddPost(props: DialogProps) {
   const handleClose = () => {
     props.setOpen(false);
   };
-  const onSumbit = handleSubmit((data) => dispatch(addNewPost(data)));
+  const onSumbit = handleSubmit((data) => {
+    const result = dispatch(addNewPost(data))
+      .unwrap()
+      .then((payload) => setOpenSuccess(true))
+      .catch((error) => setOpenError(true));
+    props.setOpen(false);
+  });
+
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    openSuccess == true ? setOpenSuccess(false) : setOpenError(false);
+  };
+
   return (
     <div>
       <Dialog open={props.open} onClose={handleClose}>
@@ -137,6 +166,32 @@ export default function AddPost(props: DialogProps) {
           </DialogActions>
         </form>
       </Dialog>
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Post Created Successfully !
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Something went wrong !
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

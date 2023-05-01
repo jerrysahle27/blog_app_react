@@ -37,7 +37,6 @@ export const addNewPost = createAsyncThunk(
   "post/addNewPost",
   async (values: Post, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log(token);
     if (token) {
       const { data } = await axios.post(
         `${baseUrl}/api/posts`,
@@ -56,6 +55,8 @@ export const addNewPost = createAsyncThunk(
     }
   }
 );
+
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: { posts: [], status: "idle", error: null } as initialState,

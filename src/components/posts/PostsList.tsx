@@ -1,15 +1,12 @@
 import { fetchPosts, selectAllPosts } from "./postsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
-
 import { useEffect, useMemo } from "react";
 export default function PostsList() {
   const posts = useAppSelector(selectAllPosts);
   const postStatus = useAppSelector((state) => state.post.status);
   const dispatch = useAppDispatch();
-  console.log(posts);
   useMemo(() => {
     if (postStatus === "idle") {
-      console.log("i am here");
       dispatch(fetchPosts());
     }
   }, [postStatus, dispatch]);
@@ -21,7 +18,7 @@ export default function PostsList() {
             Blogs
           </h2>
         </div>
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-400 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post) => (
             <article
               key={post.id}
