@@ -1,14 +1,15 @@
 // import { api } from "../../app/services/auth/auth";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Dayjs } from "dayjs";
 import { RootState } from "../../app/store";
 export interface Post {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   date: string;
   category: {
-    id:string,
+    _id: string;
     title: string;
   };
   user: {
@@ -25,6 +26,7 @@ export interface PostCategoryRequest {
 const baseUrl = "http://localhost:5000";
 type initialState = {
   posts: Post[];
+  filteredPosts: Post[];
   status: string;
   error: string | null | undefined;
 };
@@ -36,6 +38,7 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 export const addNewPost = createAsyncThunk(
   "post/addNewPost",
   async (values: Post, { getState }) => {
+    console.log(values);
     const token = (getState() as RootState).auth.token;
     if (token) {
       const { data } = await axios.post(
@@ -43,7 +46,7 @@ export const addNewPost = createAsyncThunk(
         {
           title: values.title,
           description: values.description,
-          category: values.category.id,
+          category: values.category._id,
         },
         {
           headers: {
@@ -56,11 +59,27 @@ export const addNewPost = createAsyncThunk(
   }
 );
 
-
 const postsSlice = createSlice({
   name: "posts",
-  initialState: { posts: [], status: "idle", error: null } as initialState,
-  reducers: {},
+  initialState: {
+    posts: [],
+    filteredPosts: [],
+    status: "idle",
+    error: null,
+  } as initialState,
+  reducers: {
+    filterByCategory(state, action) {
+      const { id } = action.payload;
+      state.filteredPosts =
+        id !== ""
+          ? state.posts.filter((post) => post.category._id === id)
+          : state.posts;
+    },
+    filterByDate(state, action) {
+      const { from, to } = action.payload;
+      state.posts = state.posts.filter((post) => from <= post.date >= to);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchPosts.pending, (state, action) => {
@@ -70,6 +89,7 @@ const postsSlice = createSlice({
         state.status = "succeeded";
         // Add any fetched posts to the array
         state.posts = state.posts.concat(action.payload);
+        state.filteredPosts = [...state.posts];
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
@@ -81,7 +101,5 @@ const postsSlice = createSlice({
   },
 });
 export default postsSlice.reducer;
-export const selectAllPosts = (state: RootState) => state.post.posts;
-
-// export const selectPostById = (state:initialState, postId: Id) =>
-//   state.posts.find((post) => post.id === postId)
+export const selectAllPosts = (state: RootState) => state.post.filteredPosts;
+export const { filterByCategory, filterByDate } = postsSlice.actions;

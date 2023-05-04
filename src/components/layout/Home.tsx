@@ -1,17 +1,19 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import PostsList from "../posts/PostsList";
-import PostsHeader from "../posts/PostsHeader";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
-    <>
+    <div className="flex flex-col justify-between">
       <Navbar />
-      <PostsHeader />
-      <PostsList />
-      <Footer />
-    </>
+      <div id="detail">
+        <Outlet />
+      </div>
+      <div className="pt-36">
+        <Footer />
+      </div>
+    </div>
   );
 };
 

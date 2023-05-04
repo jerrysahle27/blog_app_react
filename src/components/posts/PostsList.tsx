@@ -1,6 +1,6 @@
 import { fetchPosts, selectAllPosts } from "./postsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 export default function PostsList() {
   const posts = useAppSelector(selectAllPosts);
   const postStatus = useAppSelector((state) => state.post.status);
@@ -21,7 +21,7 @@ export default function PostsList() {
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-400 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post) => (
             <article
-              key={post.id}
+              key={post._id}
               className="flex max-w-xl flex-col items-start justify-between"
             >
               <div className="flex items-center gap-x-4 text-xs">

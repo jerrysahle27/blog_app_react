@@ -2,25 +2,18 @@ import { Avatar, Box, Button, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AccountCircleRounded } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  useRegisterUserMutation,
-  UserRequest,
-  UserResponse,
-} from "../../app/services/api";
+import { useNavigate } from "react-router-dom";
+import { useRegisterUserMutation, UserRequest } from "../../app/services/api";
 
 const Register = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [register, { isLoading, isSuccess, isError }] =
-    useRegisterUserMutation();
+  const [register, { isSuccess }] = useRegisterUserMutation();
   const { handleSubmit, control, getValues } = useForm<UserRequest>();
   const onSubmit = handleSubmit(async () => {
     try {
       console.log(getValues());
-      const user = await register(getValues()).unwrap();
-      if (isSuccess == true) {
+      await register(getValues()).unwrap();
+      if (isSuccess === true) {
         navigate("/");
       }
     } catch (err) {

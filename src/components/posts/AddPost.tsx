@@ -9,7 +9,7 @@ import { DialogProps } from "./AddPostCategory";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import { Post, addNewPost } from "./postsSlice";
 import { useGetPostCategorysQuery } from "../../app/services/api";
-import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
+import { useAppDispatch } from "../../app/services/hooks";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
@@ -63,7 +63,7 @@ export default function AddPost(props: DialogProps) {
     props.setOpen(false);
   };
   const onSumbit = handleSubmit((data) => {
-    const result = dispatch(addNewPost(data))
+    dispatch(addNewPost(data))
       .unwrap()
       .then((payload) => setOpenSuccess(true))
       .catch((error) => setOpenError(true));
@@ -78,7 +78,7 @@ export default function AddPost(props: DialogProps) {
       return;
     }
 
-    openSuccess == true ? setOpenSuccess(false) : setOpenError(false);
+    openSuccess === true ? setOpenSuccess(false) : setOpenError(false);
   };
 
   return (

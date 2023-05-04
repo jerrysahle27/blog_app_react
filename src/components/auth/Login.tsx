@@ -24,7 +24,7 @@ export const Login = () => {
         : {},
     };
   };
-  const [login, { isLoading,isSuccess }] = useLoginUserMutation();
+  const [login, {isSuccess }] = useLoginUserMutation();
   const {
     handleSubmit,
     control,

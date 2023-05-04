@@ -20,7 +20,7 @@ export interface LoginRequest {
   password: string;
 }
 type PostCategorys = {
-  id: string;
+  _id: string;
   title: string;
 };
 type PostCategoryListResponse = PostCategorys[];
