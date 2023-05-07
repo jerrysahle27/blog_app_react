@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Button, Avatar, TextField, Box } from "@mui/material";
 import { useForm, Resolver, Controller } from "react-hook-form";
 import { ProfileModel } from "./ProfileModel";
-export const Profile = () => {
+export const BasicInformation = () => {
   const dispatch = useDispatch();
 
   const resolver: Resolver<ProfileModel> = async (values) => {
@@ -195,4 +195,4 @@ export const Profile = () => {
   );
 };
 
-export default Profile;
+

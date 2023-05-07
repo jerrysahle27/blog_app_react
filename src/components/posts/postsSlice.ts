@@ -23,7 +23,7 @@ export interface PostCategoryRequest {
   title: string;
 }
 
-const baseUrl = "http://localhost:5000";
+export const baseUrl = "http://localhost:5000";
 type initialState = {
   posts: Post[];
   filteredPosts: Post[];

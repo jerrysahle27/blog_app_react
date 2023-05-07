@@ -4,6 +4,7 @@ import NotFoundPage from "./error-page/NotFoundPage";
 import Register from "./components/auth/Register";
 import Home from "./components/layout/Home";
 import Profile from "./components/profile/Profile";
+import ProfileStepper from "./components/profile/ProfileStepper"
 import Posts from "./components/posts/Posts";
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/home/profile",
-        element: <Profile />,
+        element: <ProfileStepper />,
       },
     ],
   },

@@ -2,9 +2,9 @@ import * as React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
-import { Button, Avatar, TextField, Box } from "@mui/material";
+import { Button, Avatar, TextField, Box,Typography } from "@mui/material";
 import { useForm, Resolver, Controller } from "react-hook-form";
-// import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { useLoginUserMutation } from "../../app/services/api";
 import type { LoginRequest } from "../../app/services/api";
 
@@ -24,7 +24,7 @@ export const Login = () => {
         : {},
     };
   };
-  const [login, {isSuccess }] = useLoginUserMutation();
+  const [login, { isSuccess }] = useLoginUserMutation();
   const {
     handleSubmit,
     control,
@@ -49,12 +49,10 @@ export const Login = () => {
       <div className="px-4 py-32 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-white rounded-xl shadow-lg hover:shadow-2xl items-center">
         <div className="relative">
           <Avatar className="mx-auto h-12 w-auto ">
-            {/* <LockOutlinedIcon /> */}
+            <LockOutlinedIcon />
           </Avatar>
-          <h2 className="mt-6 text-center text-sm font-bold tracking-tight text-blue-500">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+
+          <p className="mt-2 mvtext-center text-sm text-gray-600">
             Or{" "}
             <Link
               to="/register"

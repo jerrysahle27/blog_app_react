@@ -1,13 +1,12 @@
+import { Control } from "react-hook-form";
+
 export interface ProfileModel {
     user: {
       name: string;
       email: string;
       avatar: string;
     };
-    company: string;
-    location: string;
     skill: [];
-    website: string;
     bio: string;
     githubusername: string;
     experience: [
@@ -20,7 +19,7 @@ export interface ProfileModel {
         current: boolean;
       }
     ];
-    eduucation: [
+    education: [
       {
         title: string;
         school: string;
@@ -43,4 +42,6 @@ export interface ProfileModel {
   }
   
   
-  
+  export interface ProfileStepProps {
+     control: Control<ProfileModel>;
+  }
