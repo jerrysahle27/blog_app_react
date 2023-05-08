@@ -37,7 +37,7 @@ export const BasicInformation = () => {
   });
 
   return (
-    <form onSubmit={onSubmit}>
+    <React.Fragment>
       <div className="relative mt-8 flex items-center gap-x-4">
         <img
           // src={post.user.avatar}
@@ -191,8 +191,6 @@ export const BasicInformation = () => {
           )}
         />
       </div>
-    </form>
+    </React.Fragment>
   );
 };
-
-
