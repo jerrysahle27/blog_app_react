@@ -6,10 +6,12 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { BasicInformation } from "./BasicInformation";
-import Education from "./Education";
-import Experience from "./Experience";
-import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
-import { fetchProfile } from "./profileSlice";
+
+import { Education } from "./Education";
+import { Experience } from "./Experience";
+import { useForm } from "react-hook-form";
+import { ProfileModel } from "./ProfileModel";
+
 
 const steps = ["Basic Information", "Education", "Experience"];
 
@@ -23,6 +25,7 @@ export default function ProfileStepper() {
     }
   }, [profileStatus, dispatch]);
   const [activeStep, setActiveStep] = React.useState(0);
+  const { handleSubmit } = useForm<ProfileModel>();
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
   }>({});
@@ -61,12 +64,12 @@ export default function ProfileStepper() {
     setActiveStep(step);
   };
 
-  const handleComplete = () => {
+  const handleComplete = handleSubmit((data) => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
-    handleNext();
-  };
+    console.log(data);
+  });
 
   const handleReset = () => {
     setActiveStep(0);
@@ -74,7 +77,8 @@ export default function ProfileStepper() {
   };
 
   return (
-    <Box className="mx-auto max-w-7xl px-6 lg:px-8 bg-gray-80 py-6 sm:py-12">
+
+    <Box className="mx-auto mt-4 max-w-7xl px-6 lg:px-8">
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
           <Step key={label} completed={completed[index]}>
@@ -97,50 +101,46 @@ export default function ProfileStepper() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {activeStep === 0 ? (
-              <BasicInformation />
-            ) : activeStep === 1 ? (
-              <Education />
-            ) : (
-              <Experience />
-            )}
+
+            <form>
+              {activeStep === 0 ? (
+                <BasicInformation />
+              ) : activeStep === 1 ? (
+                <Education />
+              ) : (
+                <Experience />
+              )}
+            </form>
+
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               {activeStep !== 0 ? (
                 <button
-                  disabled={activeStep === 0}
                   onClick={handleBack}
-                  className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+
                 >
                   Back
                 </button>
               ) : null}
 
               <Box sx={{ flex: "1 1 auto" }} />
+              {activeStep <= steps.length - 1 ? (
+                <button
+                  onClick={handleNext}
+                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  onClick={handleComplete}
+                  type="submit"
+                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Finish
+                </button>
+              )}
 
-              <button
-                onClick={handleNext}
-                className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 mr-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Next
-              </button>
-              {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography
-                    variant="caption"
-                    sx={{ display: "inline-block" }}
-                  >
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <button
-                    onClick={handleComplete}
-                    className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    {completedSteps() === totalSteps() - 1
-                      ? "Finish"
-                      : "Complete Step"}
-                  </button>
-                ))}
             </Box>
           </React.Fragment>
         )}
