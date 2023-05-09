@@ -1,129 +1,73 @@
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TextField,
-  FormControlLabel,
-  Checkbox
-} from "@mui/material";
-import { useForm, Resolver, Controller } from "react-hook-form";
-import { ProfileModel } from "./ProfileModel";
 
-export const Education = () => {
-  const { control } = useForm<ProfileModel>();
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+
+function createData(
+  title: string,
+  school: string,
+  degree: string,
+  fieldofstudy: string,
+  location: string,
+  from: string,
+  to: string,
+  current: boolean
+) {
+  return { title, school, degree, fieldofstudy, location, from, to, current };
+}
+
+const rows = [createData("Mr", "stc", "", "", "", "", "", false)];
+
+export default function Education() {
   return (
-    <>
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        <Controller
-          name={"education.0.title"}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              margin="normal"
-              id="education.0.title"
-              fullWidth
-              onChange={onChange}
-              value={value}
-              label="Title"
-              autoComplete="title"
-              autoFocus
-            />
-          )}
-        />
-        <Controller
-          name={"education.0.school"}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              margin="normal"
-              id="education.0.school"
-              fullWidth
-              multiline
-              onChange={onChange}
-              value={value}
-              label="School"
-              autoComplete="School"
-              autoFocus
-            />
-          )}
-        />
-        <Controller
-          name={"education.0.degree"}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              margin="normal"
-              id="education.0.degree"
-              fullWidth
-              multiline
-              onChange={onChange}
-              value={value}
-              label="Degree"
-              autoComplete="Degree"
-              autoFocus
-            />
-          )}
-        />
-        <Controller
-          name={"education.0.from"}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              margin="normal"
-              id="education.0.from"
-              fullWidth
-              type="date"
-              onChange={onChange}
-              value={value}
-              autoComplete="From"
-              autoFocus
-            />
-          )}
-        />
-        <Controller
-          name={"education.0.to"}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              margin="normal"
-              id="education.0.to"
-              fullWidth
-              type="date"
-              onChange={onChange}
-              value={value}
-              autoComplete="To"
-              autoFocus
-            />
-          )}
-        />
-        <Controller
-          name={"education.0.current"}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <FormControlLabel
-              control={
-                <Checkbox defaultChecked onChange={onChange} value={value} />
-              }
-              label="Current"
-            />
-          )}
-        />
-      </div>
-      <Table className="mt-2">
-        <TableHead>
-          <TableCell>Title</TableCell>
-          <TableCell>School</TableCell>
-          <TableCell>Degree</TableCell>
-          <TableCell>Field Of Study</TableCell>
-          <TableCell>Location</TableCell>
-          <TableCell>From</TableCell>
-          <TableCell>To</TableCell>
-          <TableCell>Current</TableCell>
-        </TableHead>
-        <TableBody></TableBody>
-      </Table>
-      ;
-    </>
+    <React.Fragment>
+      <TableContainer component={Paper} sx={{ m: 3 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Title</TableCell>
+              <TableCell align="right">School</TableCell>
+              <TableCell align="right">Degree</TableCell>
+              <TableCell align="right">Field Of Study</TableCell>
+              <TableCell align="right">Location</TableCell>
+              <TableCell align="right">From</TableCell>
+              <TableCell align="right">To</TableCell>
+              <TableCell align="right">Current</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.title}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.title}
+                </TableCell>
+                <TableCell align="right">{row.school}</TableCell>
+                <TableCell align="right">{row.degree}</TableCell>
+                <TableCell align="right">{row.fieldofstudy}</TableCell>
+                <TableCell align="right">{row.location}</TableCell>
+                <TableCell align="right">{row.from}</TableCell>
+                <TableCell align="right">{row.to}</TableCell>
+                <TableCell align="right">{row.current}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <button
+        // onClick={handleNext}
+        className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 mt-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Add Education History
+      </button>
+    </React.Fragment>
+
   );
-};
+}

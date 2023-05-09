@@ -6,14 +6,24 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { BasicInformation } from "./BasicInformation";
+
 import { Education } from "./Education";
 import { Experience } from "./Experience";
 import { useForm } from "react-hook-form";
 import { ProfileModel } from "./ProfileModel";
 
+
 const steps = ["Basic Information", "Education", "Experience"];
 
 export default function ProfileStepper() {
+  const profile = useAppSelector((state) => state.profile);
+  const profileStatus = useAppSelector((state) => state.profile.status);
+  const dispatch = useAppDispatch();
+  React.useMemo(() => {
+    if (profileStatus === "idle") {
+      dispatch(fetchProfile());
+    }
+  }, [profileStatus, dispatch]);
   const [activeStep, setActiveStep] = React.useState(0);
   const { handleSubmit } = useForm<ProfileModel>();
   const [completed, setCompleted] = React.useState<{
@@ -67,6 +77,7 @@ export default function ProfileStepper() {
   };
 
   return (
+
     <Box className="mx-auto mt-4 max-w-7xl px-6 lg:px-8">
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
@@ -90,6 +101,7 @@ export default function ProfileStepper() {
           </React.Fragment>
         ) : (
           <React.Fragment>
+
             <form>
               {activeStep === 0 ? (
                 <BasicInformation />
@@ -105,10 +117,12 @@ export default function ProfileStepper() {
                 <button
                   onClick={handleBack}
                   className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+
                 >
                   Back
                 </button>
               ) : null}
+
               <Box sx={{ flex: "1 1 auto" }} />
               {activeStep <= steps.length - 1 ? (
                 <button
@@ -126,6 +140,7 @@ export default function ProfileStepper() {
                   Finish
                 </button>
               )}
+
             </Box>
           </React.Fragment>
         )}
