@@ -157,12 +157,21 @@ export default function AddPost(props: DialogProps) {
             />
           </DialogContent>
           <DialogActions>
-            <Button type="submit" variant="contained">
+            <button
+              className=" bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              type="submit"
+            >
+              {" "}
               Save
-            </Button>
-            <Button variant="contained" onClick={handleClose}>
+            </button>
+            <button
+              className=" bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              type="submit"
+              onClick={handleClose}
+            >
+              {" "}
               Cancel
-            </Button>
+            </button>
           </DialogActions>
         </form>
       </Dialog>

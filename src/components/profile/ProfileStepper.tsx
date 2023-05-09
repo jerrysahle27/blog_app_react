@@ -6,11 +6,22 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { BasicInformation } from "./BasicInformation";
-import { Education } from "./Education";
+import Education from "./Education";
+import Experience from "./Experience";
+import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
+import { fetchProfile } from "./profileSlice";
 
 const steps = ["Basic Information", "Education", "Experience"];
 
 export default function ProfileStepper() {
+  const profile = useAppSelector((state) => state.profile);
+  const profileStatus = useAppSelector((state) => state.profile.status);
+  const dispatch = useAppDispatch();
+  React.useMemo(() => {
+    if (profileStatus === "idle") {
+      dispatch(fetchProfile());
+    }
+  }, [profileStatus, dispatch]);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
@@ -63,7 +74,7 @@ export default function ProfileStepper() {
   };
 
   return (
-    <Box className="mx-auto max-w-7xl px-6 lg:px-8mx-auto max-w-7xl px-6 lg:px-8">
+    <Box className="mx-auto max-w-7xl px-6 lg:px-8 bg-gray-80 py-6 sm:py-12">
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
           <Step key={label} completed={completed[index]}>
@@ -86,22 +97,29 @@ export default function ProfileStepper() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {activeStep === 0 ? <BasicInformation /> : <Education />}
+            {activeStep === 0 ? (
+              <BasicInformation />
+            ) : activeStep === 1 ? (
+              <Education />
+            ) : (
+              <Experience />
+            )}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-                variant="contained"
-              >
-                Back
-              </Button>
+              {activeStep !== 0 ? (
+                <button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Back
+                </button>
+              ) : null}
+
               <Box sx={{ flex: "1 1 auto" }} />
 
               <button
                 onClick={handleNext}
-                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 mr-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Next
               </button>
@@ -114,11 +132,14 @@ export default function ProfileStepper() {
                     Step {activeStep + 1} already completed
                   </Typography>
                 ) : (
-                  <Button onClick={handleComplete}>
+                  <button
+                    onClick={handleComplete}
+                    className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
                     {completedSteps() === totalSteps() - 1
                       ? "Finish"
                       : "Complete Step"}
-                  </Button>
+                  </button>
                 ))}
             </Box>
           </React.Fragment>

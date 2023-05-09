@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProfileModel } from "./ProfileModel";
 import axios from "axios";
 import { baseUrl } from "../posts/postsSlice";
+import { RootState } from "../../app/store";
 
 type initialState = {
   profile: ProfileModel;
@@ -12,8 +13,21 @@ type initialState = {
 export const fetchProfile = createAsyncThunk(
   "profile/fetchProfile",
   async () => {
-    const response = await axios.get(`${baseUrl}/api/profile`);
-    return response.data;
+    const token = localStorage.getItem("token");
+    if (token) {
+      const response = await axios.get(`${baseUrl}/api/profile`, {
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      return response.data;
+    }
+  }
+);
+export const addNewProfile = createAsyncThunk(
+  "profile/addNewProfile",
+  async (values: ProfileModel) => {
+    console.log(values);
   }
 );
 const profileSlice = createSlice({

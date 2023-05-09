@@ -51,17 +51,12 @@ export default function Navbar() {
             sx={{ flexGrow: 1, alignSelf: "flex-end" }}
           ></Typography>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <Button
-              sx={{
-                marginRight: 1,
-              }}
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}
+            <button
+              className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               onClick={handleClickOpen}
             >
               New Post
-            </Button>
+            </button>
             <button
               type="button"
               className="rounded-full bg-white p-1 text-gray-400 hover:text-blue focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-white"
