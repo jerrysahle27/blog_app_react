@@ -13,7 +13,6 @@ import {
   Box,
   AppBar,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import AddPost from "../posts/AddPost";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -99,13 +98,13 @@ export default function Navbar() {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href="/"
+                        href="/home/posts"
                         className={classNames(
                           active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700"
                         )}
                       >
-                        Settings
+                        posts
                       </a>
                     )}
                   </Menu.Item>

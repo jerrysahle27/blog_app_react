@@ -37,9 +37,8 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 
 export const addNewPost = createAsyncThunk(
   "post/addNewPost",
-  async (values: Post, { getState }) => {
-    console.log(values);
-    const token = (getState() as RootState).auth.token;
+  async (values: Post) => {
+    const token = localStorage.getItem("token");
     if (token) {
       const { data } = await axios.post(
         `${baseUrl}/api/posts`,

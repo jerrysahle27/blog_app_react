@@ -4,7 +4,7 @@ import NotFoundPage from "./error-page/NotFoundPage";
 import Register from "./components/auth/Register";
 import Home from "./components/layout/Home";
 import Profile from "./components/profile/Profile";
-import ProfileStepper from "./components/profile/ProfileStepper"
+import ProfileTab from "./components/profile/ProfileTab";
 import Posts from "./components/posts/Posts";
 const router = createBrowserRouter([
   {
@@ -24,11 +24,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/home/posts",
-        element: <Posts/>,
+        element: <Posts />,
       },
       {
         path: "/home/profile",
-        element: <ProfileStepper />,
+        element: <ProfileTab />,
       },
     ],
   },

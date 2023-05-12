@@ -1,6 +1,7 @@
 import { fetchPosts, selectAllPosts } from "./postsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
 import { useMemo } from "react";
+import { motion } from "framer-motion";
 export default function PostsList() {
   const posts = useAppSelector(selectAllPosts);
   const postStatus = useAppSelector((state) => state.post.status);
@@ -11,7 +12,11 @@ export default function PostsList() {
     }
   }, [postStatus, dispatch]);
   return (
-    <div className="bg-gray-80 py-12 sm:py-24">
+    <motion.div
+      animate={{ y: 10 }}
+      transition={{ ease: "easeOut", duration: 1 }}
+      className="bg-gray-80 py-12 sm:py-24"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -66,6 +71,6 @@ export default function PostsList() {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

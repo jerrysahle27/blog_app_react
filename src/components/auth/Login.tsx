@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
-import { Button, Avatar, TextField, Box,Typography } from "@mui/material";
+import { Button, Avatar, TextField, Box, Typography } from "@mui/material";
 import { useForm, Resolver, Controller } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { useLoginUserMutation } from "../../app/services/api";
@@ -35,11 +35,9 @@ export const Login = () => {
   });
   const onSubmit = handleSubmit(async () => {
     try {
-      console.log(getValues());
       const user = await login(getValues()).unwrap();
       dispatch(setCredentials(user));
-      console.log(isSuccess);
-      navigate("/home");
+      navigate("/home/posts");
     } catch (err) {
       console.error(err);
     }
@@ -87,6 +85,7 @@ export const Login = () => {
               <TextField
                 margin="normal"
                 id="password"
+                type="password"
                 required
                 fullWidth
                 onChange={onChange}
