@@ -10,15 +10,12 @@ export const Footer: FC = (): ReactElement => {
         backgroundColor: "primary.main",
         paddingTop: "1rem",
         paddingBottom: "2rem",
-        
       }}
     >
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>
-            <Typography color="black" variant="h5">
-              
-            </Typography>
+            <Typography color="black" variant="h5"></Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography color="white" variant="subtitle1">

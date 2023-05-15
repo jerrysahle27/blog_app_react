@@ -15,6 +15,7 @@ export interface LoginResponse {
   success: boolean;
   token: string;
 }
+
 export interface LoginRequest {
   email: string;
   password: string;

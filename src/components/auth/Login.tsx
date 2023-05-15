@@ -1,29 +1,28 @@
-import * as React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
-import { Button, Avatar, TextField, Box, Typography } from "@mui/material";
-import { useForm, Resolver, Controller } from "react-hook-form";
+import { Button, Avatar, TextField, Box } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { useLoginUserMutation } from "../../app/services/api";
 import type { LoginRequest } from "../../app/services/api";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useGoogleLogin } from "@react-oauth/google";
+import GoogleIcon from "@mui/icons-material/Google";
+import AlertNotification from "../../utils/AlertNotification";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const resolver: Resolver<LoginRequest> = async (values) => {
-    return {
-      values: !values.email ? {} : values,
-      errors: !values.email
-        ? {
-            email: {
-              type: "required",
-              message: "This is required.",
-            },
-          }
-        : {},
-    };
-  };
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [message, setMessage] = useState("");
+  const SignupSchema = yup.object().shape({
+    email: yup.string().required(),
+    password: yup.string().required(),
+  });
   const [login, { isSuccess }] = useLoginUserMutation();
   const {
     handleSubmit,
@@ -31,34 +30,38 @@ export const Login = () => {
     getValues,
     formState: { errors },
   } = useForm<LoginRequest>({
-    resolver: resolver,
+    resolver: yupResolver(SignupSchema),
   });
   const onSubmit = handleSubmit(async () => {
     try {
       const user = await login(getValues()).unwrap();
       dispatch(setCredentials(user));
+      setOpenSuccess(true);
+      setMessage("Logged In Successfully");
       navigate("/home/posts");
     } catch (err) {
       console.error(err);
     }
   });
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      navigate("/home/posts");
+      const GoogleResponseCredential = {
+        success: true,
+        token: codeResponse.access_token,
+      };
+      dispatch(setCredentials(GoogleResponseCredential));
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
   return (
     <Box>
-      <div className="px-4 py-32 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-white rounded-xl shadow-lg hover:shadow-2xl items-center">
+      <div className="px-4 py-48 sm:px-6 lg:px-8 max-w-lg mx-auto  bg-gray rounded-xl shadow-lg hover:shadow-2xl items-center">
         <div className="relative">
-          <Avatar className="mx-auto h-12 w-auto ">
+          <Avatar className="mx-auto">
             <LockOutlinedIcon />
           </Avatar>
-
-          <p className="mt-2 mvtext-center text-sm text-gray-600">
-            Or{" "}
-            <Link
-              to="/register"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              create your account
-            </Link>
-          </p>
         </div>
         <form onSubmit={onSubmit}>
           <Controller
@@ -68,7 +71,8 @@ export const Login = () => {
               <TextField
                 margin="normal"
                 id="email"
-                required
+                helperText={errors?.email ? errors.email.message : ""}
+                error={errors?.email ? true : false}
                 fullWidth
                 onChange={onChange}
                 value={value}
@@ -86,7 +90,8 @@ export const Login = () => {
                 margin="normal"
                 id="password"
                 type="password"
-                required
+                helperText={errors?.password ? errors.password.message : ""}
+                error={errors?.password ? true : false}
                 fullWidth
                 onChange={onChange}
                 value={value}
@@ -105,7 +110,34 @@ export const Login = () => {
             Sign In
           </Button>
         </form>
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Not have account?{" "}
+          <a
+            href="/register"
+            className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
+          >
+            Create your account
+          </a>
+        </p>
+        <br />
+        <Button
+          onClick={() => loginWithGoogle()}
+          startIcon={<GoogleIcon />}
+          fullWidth
+          sx={{ mt: 3, mb: 2 }}
+          variant="outlined"
+        >
+          Sign in with Google{" "}
+        </Button>
       </div>
+
+      <AlertNotification
+        openSuccess={openSuccess}
+        openError={openError}
+        setOpenSuccess={setOpenSuccess}
+        setOpenError={setOpenError}
+        message={message}
+      />
     </Box>
   );
 };

@@ -5,15 +5,11 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
-import {
-  Button,
-  Typography,
-  IconButton,
-  Toolbar,
-  Box,
-  AppBar,
-} from "@mui/material";
+import { Typography, IconButton, Toolbar, Box, AppBar } from "@mui/material";
 import AddPost from "../posts/AddPost";
+import { googleLogout } from "@react-oauth/google";
+import { clearCredentials } from "../auth/authSlice";
+import { useAppDispatch } from "../../app/services/hooks";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "flex-start",
@@ -27,8 +23,14 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useAppDispatch();
   const handleClickOpen = () => {
     setOpen(true);
+  };
+  const SignOut = () => {
+    googleLogout();
+    dispatch(clearCredentials);
+    localStorage.clear()
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -82,7 +84,7 @@ export default function Navbar() {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <Menu.Item>
+                  {/* <Menu.Item>
                     {({ active }) => (
                       <a
                         href="/home/profile"
@@ -94,7 +96,7 @@ export default function Navbar() {
                         Your Profile
                       </a>
                     )}
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item>
                     {({ active }) => (
                       <a
@@ -116,6 +118,7 @@ export default function Navbar() {
                           active ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-700"
                         )}
+                        onClick={() => SignOut()}
                       >
                         Sign out
                       </a>

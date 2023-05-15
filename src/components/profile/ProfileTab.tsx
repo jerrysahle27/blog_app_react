@@ -2,8 +2,7 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Paper, Chip } from "@mui/material";
 import { BasicInformation } from "./BasicInformation";
-import Education from "./Education";
-import { Experience } from "./Experience";
+
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -58,7 +57,7 @@ export default function ProfileTab() {
         })}
       </Paper>
 
-      <div className="w-full mx-auto max-w-7xl px-6 lg:px-8 ">
+      {/* <div className="w-full mx-auto max-w-7xl px-6 lg:px-8 ">
         {showSecondTab ? (
           <Education />
         ) : showThirdTab ? (
@@ -66,7 +65,7 @@ export default function ProfileTab() {
         ) : (
           <BasicInformation />
         )}
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }

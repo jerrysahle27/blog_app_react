@@ -4,59 +4,36 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { DialogProps } from "./AddPostCategory";
-import { Controller, Resolver, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Post, addNewPost } from "./postsSlice";
 import { useGetPostCategorysQuery } from "../../app/services/api";
 import { useAppDispatch } from "../../app/services/hooks";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import AlertNotification from "../../utils/AlertNotification";
+export interface DialogProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClickOpen: () => void;
+}
 export default function AddPost(props: DialogProps) {
   const { data: postCategoryList = [] } = useGetPostCategorysQuery();
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
+  const [message, setMessage] = React.useState("");
   const dispatch = useAppDispatch();
-  const resolver: Resolver<Post> = async (values) => {
-    return {
-      values: !values.title ? {} : values,
-      errors: !values.title
-        ? {
-            title: {
-              type: "required",
-              message: "This is required.",
-            },
-          }
-        : !values.description
-        ? {
-            description: {
-              type: "required",
-              message: "This is required.",
-            },
-          }
-        : !values.category
-        ? {
-            category: {
-              type: "required",
-              message: "This is required.",
-            },
-          }
-        : {},
-    };
-  };
+  const PostSchema = yup.object().shape({
+    title: yup.string().required(),
+    description: yup.string().required(),
+    category: yup.object().required(),
+  });
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<Post>({
-    resolver: resolver,
+    resolver: yupResolver(PostSchema),
   });
   const handleClose = () => {
     props.setOpen(false);
@@ -64,22 +41,13 @@ export default function AddPost(props: DialogProps) {
   const onSumbit = handleSubmit((data) => {
     dispatch(addNewPost(data))
       .unwrap()
-      .then((payload) => setOpenSuccess(true))
+      .then((payload) => {
+        setOpenSuccess(true);
+        setMessage("Post Created Successfully");
+      })
       .catch((error) => setOpenError(true));
     props.setOpen(false);
   });
-
-  const handleSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    openSuccess === true ? setOpenSuccess(false) : setOpenError(false);
-  };
-
   return (
     <div>
       <Dialog open={props.open} onClose={handleClose}>
@@ -174,32 +142,13 @@ export default function AddPost(props: DialogProps) {
           </DialogActions>
         </form>
       </Dialog>
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Post Created Successfully !
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Something went wrong !
-        </Alert>
-      </Snackbar>
+      <AlertNotification
+        openSuccess={openSuccess}
+        openError={openError}
+        setOpenSuccess={setOpenSuccess}
+        setOpenError={setOpenError}
+        message={message}
+      />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 // import { api } from "../../app/services/auth/auth";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Dayjs } from "dayjs";
 import { RootState } from "../../app/store";
 export interface Post {
   _id: string;
@@ -17,6 +16,7 @@ export interface Post {
     email: string;
     avatar: string;
   };
+  likes: [];
 }
 
 export interface PostCategoryRequest {
@@ -57,7 +57,20 @@ export const addNewPost = createAsyncThunk(
     }
   }
 );
-
+export const likePost = createAsyncThunk(
+  "post/likePost/:id",
+  async (id: string) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.post(`${baseUrl}/api/posts/like/` + id, {
+        headers: {
+          authorization: `${token}`,
+        },
+      });
+      return data;
+    }
+  }
+);
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -96,6 +109,9 @@ const postsSlice = createSlice({
       })
       .addCase(addNewPost.fulfilled, (state, action) => {
         state.posts.push(action.payload);
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        // state.posts.filter((post) => post.user.)
       });
   },
 });

@@ -40,7 +40,3 @@ export interface ProfileModel {
   };
   date: Date;
 }
-
-export interface ProfileStepProps {
-  control: Control<ProfileModel>;
-}
