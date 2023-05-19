@@ -58,15 +58,20 @@ export const addNewPost = createAsyncThunk(
   }
 );
 export const likePost = createAsyncThunk(
-  "post/likePost/:id",
+  "post/likePost",
   async (id: string) => {
     const token = localStorage.getItem("token");
+    console.log(id);
     if (token) {
-      const { data } = await axios.post(`${baseUrl}/api/posts/like/` + id, {
-        headers: {
-          authorization: `${token}`,
-        },
-      });
+      const { data } = await axios.post(
+        `${baseUrl}/api/posts/like/` + id,
+        {},
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
       return data;
     }
   }
@@ -109,9 +114,16 @@ const postsSlice = createSlice({
       })
       .addCase(addNewPost.fulfilled, (state, action) => {
         state.posts.push(action.payload);
+        state.filteredPosts.push(action.payload);
       })
       .addCase(likePost.fulfilled, (state, action) => {
-        // state.posts.filter((post) => post.user.)
+        const existingPost = state.filteredPosts.find(
+          ({ _id }) => _id === action.payload._id
+        );
+        console.log(existingPost);
+        if (existingPost) {
+          existingPost.likes = action.payload.likes;
+        }
       });
   },
 });

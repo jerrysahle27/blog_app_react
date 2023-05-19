@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { TimeAgo } from "../../utils/TimeAgo";
+import PaginationComponent from "../../utils/PaginationComponent";
 
 export default function PostsList() {
   const posts = useAppSelector(selectAllPosts);
@@ -86,13 +87,16 @@ export default function PostsList() {
                   <FavoriteIcon />
                 </IconButton>
                 <p className=" line-clamp-3 text-sm leading-6 text-gray-900">
-                  {post.likes.length !== 0 ? post.likes.length + "likes" : null} 
+                  {post.likes.length !== 0
+                    ? post.likes.length + "\tlikes"
+                    : null}
                 </p>
               </CardActions>
             </Card>
           ))}
         </div>
       </div>
+      <PaginationComponent />
     </motion.div>
   );
 }
