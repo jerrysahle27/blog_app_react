@@ -11,7 +11,6 @@ const Register = () => {
   const { handleSubmit, control, getValues } = useForm<UserRequest>();
   const onSubmit = handleSubmit(async () => {
     try {
-      console.log(getValues());
       await register(getValues()).unwrap();
       if (isSuccess === true) {
         navigate("/");

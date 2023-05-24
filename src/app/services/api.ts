@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-
+import jwtDecode from "jwt-decode";
 export interface UserRequest {
   name: string;
   email: string;
@@ -8,8 +8,9 @@ export interface UserRequest {
   password2: string;
 }
 export interface UserResponse {
-  success: boolean;
-  user: {};
+  id: string;
+  name: string;
+  email: string;
 }
 export interface LoginResponse {
   success: boolean;
@@ -33,8 +34,10 @@ export const api = createApi({
     prepareHeaders: (headers, { getState }) => {
       // By default, if we have a token in the store, let's use that for authenticated requests
       const token = (getState() as RootState).auth.token;
-      localStorage.setItem("token", token !== null ? token : "");
       if (token) {
+        localStorage.setItem("token", token);
+        const user = jwtDecode(token);
+        localStorage.setItem("user", JSON.stringify(user));
         headers.set("authorization", `${token}`);
       }
       return headers;
