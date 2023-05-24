@@ -23,7 +23,7 @@ export const Login = () => {
     email: yup.string().required(),
     password: yup.string().required(),
   });
-  const [login, { isSuccess }] = useLoginUserMutation();
+  const [login] = useLoginUserMutation();
   const {
     handleSubmit,
     control,

@@ -1,25 +1,17 @@
 import * as React from "react";
-import { ThemeProvider, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
-import {
-  Typography,
-  IconButton,
-  Toolbar,
-  Box,
-  AppBar,
-  Paper,
-  Icon,
-  Input,
-} from "@mui/material";
+import { IconButton, Toolbar, Box, AppBar } from "@mui/material";
 import AddPost from "../posts/AddPost";
 import { googleLogout } from "@react-oauth/google";
 import { clearCredentials } from "../auth/authSlice";
 import { useAppDispatch } from "../../app/services/hooks";
-import { motion } from "framer-motion";
+import SearchComponent from "../../utils/SearchComponent";
+import { useState } from "react";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "flex-start",
@@ -32,7 +24,8 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const dispatch = useAppDispatch();
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,39 +39,18 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <StyledToolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <div className="flex flex-1 items-center justify-center px-12">
-            {/* <ThemeProvider theme={mainTheme}> */}
-            <Paper
-              component={motion.div}
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-              className="flex items-center w-full h-6 max-w-512 px-8 py-4 rounded-16 shadow"
+          <div className="flex flex-1 items-center justify-between">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
             >
-              {/* <Icon color="action">search</Icon> */}
-
-              <Input
-                placeholder="Search"
-                className="flex flex-1 mx-8"
-                disableUnderline
-                fullWidth
-                // value={searchText}
-                inputProps={{
-                  "aria-label": "Search",
-                }}
-                // onChange={(ev) => dispatch(setOrdersSearchText(ev))}
-              />
-            </Paper>
-            {/* </ThemeProvider> */}
+              <MenuIcon />
+            </IconButton>
           </div>
+          <SearchComponent searchText={searchText} setSearchText={setSearchText}/>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"

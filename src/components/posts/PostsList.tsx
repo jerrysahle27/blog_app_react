@@ -1,4 +1,4 @@
-import { fetchPosts, selectAllPosts, likePost } from "./postsSlice";
+import { fetchPosts, selectAllPosts, likePost, Like } from "./postsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/services/hooks";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
@@ -9,13 +9,16 @@ import {
   CardHeader,
   IconButton,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { TimeAgo } from "../../utils/TimeAgo";
-import PaginationComponent from "../../utils/PaginationComponent";
+import Pagination from "../../utils/PaginationComponent";
 
 export default function PostsList() {
   const posts = useAppSelector(selectAllPosts);
   const postStatus = useAppSelector((state) => state.post.status);
+  const loggedInUser = localStorage.getItem("user");
+
   const dispatch = useAppDispatch();
   useMemo(() => {
     if (postStatus === "idle") {
@@ -29,7 +32,7 @@ export default function PostsList() {
     <motion.div
       animate={{ y: 10 }}
       transition={{ ease: "easeOut", duration: 2 }}
-      className="bg-gray-70 py-12 sm:py-24"
+      className="bg-gray-70 py-6 sm:py-12"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
         <div className="mx-auto max-w-2xl lg:mx-0">
@@ -42,6 +45,7 @@ export default function PostsList() {
             <Card
               sx={{ maxWidth: 1000 }}
               className="shadow-lg hover:shadow-2xl"
+              key={post._id}
             >
               <div className="flex items-center gap-x-7 text-xs">
                 <time dateTime={post.date} className="text-gray-500">
@@ -79,14 +83,24 @@ export default function PostsList() {
                   </p>
                 </div>
               </CardContent>
-              <CardActions disableSpacing className="mt-3">
+              <CardActions disableSpacing className="mt-3 flex-1">
                 <IconButton
                   aria-label="add to favorites"
                   onClick={() => handleLike(post._id)}
                 >
-                  <FavoriteIcon />
+                  {loggedInUser && post.likes.length === 0 ? (
+                    <ThumbUpOffAltIcon />
+                  ) : post.likes.filter(
+                      (like) =>
+                        like.user ===
+                        JSON.parse(loggedInUser ? loggedInUser : "").id
+                    ) ? (
+                    <ThumbUpAltIcon />
+                  ) : (
+                    <ThumbUpOffAltIcon />
+                  )}
                 </IconButton>
-                <p className=" line-clamp-3 text-sm leading-6 text-gray-900">
+                <p className="line-clamp-3 text-sm leading-6 text-gray-900">
                   {post.likes.length !== 0
                     ? post.likes.length + "\tlikes"
                     : null}
@@ -96,7 +110,10 @@ export default function PostsList() {
           ))}
         </div>
       </div>
-      <PaginationComponent />
+      <Pagination
+        count={Math.trunc(posts.length / 10)}
+        allResults={posts.length}
+      />
     </motion.div>
   );
 }

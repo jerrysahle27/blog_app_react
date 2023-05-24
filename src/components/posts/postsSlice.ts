@@ -2,6 +2,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
+export interface Like  {
+  _id: string;
+  user: string;
+};
 export interface Post {
   _id: string;
   title: string;
@@ -16,7 +20,7 @@ export interface Post {
     email: string;
     avatar: string;
   };
-  likes: [];
+  likes: Like[];
 }
 
 export interface PostCategoryRequest {
@@ -92,9 +96,13 @@ const postsSlice = createSlice({
           ? state.posts.filter((post) => post.category._id === id)
           : state.posts;
     },
-    filterByDate(state, action) {
-      const { from, to } = action.payload;
-      state.posts = state.posts.filter((post) => from <= post.date >= to);
+    filterByText(state, action) {
+      state.filteredPosts =
+        action.payload !== ""
+          ? [...state.filteredPosts].filter((post) =>
+              post.title.toLowerCase().includes(action.payload.toLowerCase())
+            )
+          : state.filteredPosts;
     },
   },
   extraReducers(builder) {
@@ -129,4 +137,4 @@ const postsSlice = createSlice({
 });
 export default postsSlice.reducer;
 export const selectAllPosts = (state: RootState) => state.post.filteredPosts;
-export const { filterByCategory, filterByDate } = postsSlice.actions;
+export const { filterByCategory, filterByText } = postsSlice.actions;
