@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
 import { BellIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { IconButton, Toolbar, Box, AppBar } from "@mui/material";
@@ -39,21 +40,16 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <StyledToolbar>
-          <div className="flex flex-1 items-center justify-between">
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
+          <div className="flex flex-1 items-center">
+            <Diversity3Icon/>
           </div>
-          <SearchComponent searchText={searchText} setSearchText={setSearchText}/>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <SearchComponent
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
+          {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
-              className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               onClick={handleClickOpen}
             >
               New Post
@@ -66,7 +62,7 @@ export default function Navbar() {
               <BellIcon className="h-6 w-6" aria-hidden="true" />
             </button>
 
-            {/* Profile dropdown */}
+         
             <Menu as="div" className="relative ml-3">
               <div>
                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-white">
@@ -84,7 +80,7 @@ export default function Navbar() {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  {/* <Menu.Item>
+                  <Menu.Item>
                     {({ active }) => (
                       <a
                         href="/home/profile"
@@ -96,7 +92,7 @@ export default function Navbar() {
                         Your Profile
                       </a>
                     )}
-                  </Menu.Item> */}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <a
@@ -127,7 +123,7 @@ export default function Navbar() {
                 </Menu.Items>
               </Transition>
             </Menu>
-          </div>
+          </div> */}
         </StyledToolbar>
       </AppBar>
       <AddPost

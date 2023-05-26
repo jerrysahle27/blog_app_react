@@ -10,7 +10,7 @@ const Home = () => {
       <div id="detail">
         <Outlet />
       </div>
-      <div className="pt-36">
+      <div className="bottom-0">
         <Footer />
       </div>
     </div>

@@ -2,10 +2,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../app/store";
-export interface Like  {
+export interface Like {
   _id: string;
   user: string;
-};
+}
+export interface Comment {
+  id: string;
+  user: string;
+  text: string;
+  date: Date;
+}
 export interface Post {
   _id: string;
   title: string;
@@ -21,6 +27,7 @@ export interface Post {
     avatar: string;
   };
   likes: Like[];
+  comments: Comment[];
 }
 
 export interface PostCategoryRequest {
@@ -65,11 +72,31 @@ export const likePost = createAsyncThunk(
   "post/likePost",
   async (id: string) => {
     const token = localStorage.getItem("token");
-    console.log(id);
     if (token) {
       const { data } = await axios.post(
         `${baseUrl}/api/posts/like/` + id,
         {},
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      return data;
+    }
+  }
+);
+
+export const commentPost = createAsyncThunk(
+  "post/commentPost",
+  async (values: Comment) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.post(
+        `${baseUrl}/api/posts/comment/` + values.id,
+        {
+          text: values.text,
+        },
         {
           headers: {
             Authorization: `${token}`,
@@ -128,9 +155,17 @@ const postsSlice = createSlice({
         const existingPost = state.filteredPosts.find(
           ({ _id }) => _id === action.payload._id
         );
-        console.log(existingPost);
         if (existingPost) {
           existingPost.likes = action.payload.likes;
+        }
+      })
+
+      .addCase(commentPost.fulfilled, (state, action) => {
+        const existingPost = state.filteredPosts.find(
+          ({ _id }) => _id === action.payload._id
+        );
+        if (existingPost) {
+          existingPost.comments = action.payload.comments;
         }
       });
   },
