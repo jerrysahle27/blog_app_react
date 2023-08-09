@@ -62,7 +62,7 @@ export default function SearchComponent({
     dispatch(filterByText(searchText));
   };
   return (
-    <Box sx={{ alignItems: "center", justifyContent: "center" }}>
+    <Box sx={{ flexGrow: 1, alignItems: "center" }}>
       <Search>
         <SearchIconWrapper>
           <SearchIcon color="primary" />

@@ -38,7 +38,7 @@ export default function AddPost(props: DialogProps) {
   const handleClose = () => {
     props.setOpen(false);
   };
-  const onSubmit = handleSubmit((data) => {
+  const onSumbit = handleSubmit((data) => {
     dispatch(addNewPost(data))
       .unwrap()
       .then((payload) => {
@@ -51,7 +51,7 @@ export default function AddPost(props: DialogProps) {
   return (
     <div>
       <Dialog open={props.open} onClose={handleClose}>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSumbit}>
           <DialogTitle>New Post</DialogTitle>
           <DialogContent>
             <Controller

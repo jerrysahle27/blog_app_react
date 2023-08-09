@@ -129,7 +129,7 @@ const postsSlice = createSlice({
           ? [...state.filteredPosts].filter((post) =>
               post.title.toLowerCase().includes(action.payload.toLowerCase())
             )
-          : state.posts;
+          : state.filteredPosts;
     },
   },
   extraReducers(builder) {
