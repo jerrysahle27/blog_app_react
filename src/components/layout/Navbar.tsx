@@ -16,8 +16,10 @@ import { useState } from "react";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "flex-start",
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(2),
+  padding: theme.spacing(3),
+  margin:theme.spacing(2),
+  // paddingTop: theme.spacing(1),
+  // paddingBottom: theme.spacing(2),
   // Override media queries injected by theme.mixins.toolbar
   "@media all": {
     minHeight: 128,
@@ -37,23 +39,23 @@ export default function Navbar() {
     localStorage.clear();
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 0 }}>
       <AppBar position="static">
         <StyledToolbar>
           <div className="flex flex-1 items-center">
-            <Diversity3Icon/>
+            {/* <Diversity3Icon/> */}
           </div>
-          <SearchComponent
+          {/* <SearchComponent
             searchText={searchText}
             setSearchText={setSearchText}
-          />
-          {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+          /> */}
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            {/* <button
               className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold mr-1 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               onClick={handleClickOpen}
             >
               New Post
-            </button>
+            </button> */}
             <button
               type="button"
               className="rounded-full bg-white p-1 text-gray-400 hover:text-blue focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-white"
@@ -62,7 +64,6 @@ export default function Navbar() {
               <BellIcon className="h-6 w-6" aria-hidden="true" />
             </button>
 
-         
             <Menu as="div" className="relative ml-3">
               <div>
                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-white">
@@ -123,7 +124,7 @@ export default function Navbar() {
                 </Menu.Items>
               </Transition>
             </Menu>
-          </div> */}
+          </div>
         </StyledToolbar>
       </AppBar>
       <AddPost

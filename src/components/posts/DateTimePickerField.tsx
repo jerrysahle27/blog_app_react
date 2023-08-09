@@ -8,7 +8,7 @@ import { useAppDispatch } from "../../app/services/hooks";
 
 export default function DateTimePickerField() {
   const dispatch = useAppDispatch();
-  const [fromvalue, setFrommValue] = React.useState<Dayjs | null>(null);
+  const [fromvalue, setFromValue] = React.useState<Dayjs | null>(null);
   const [tovalue, setToValue] = React.useState<Dayjs | null>(null);
 
   // React.useEffect(() => {
@@ -28,7 +28,7 @@ export default function DateTimePickerField() {
           label="From"
           slotProps={{ textField: { size: "small" } }}
           value={fromvalue}
-          onChange={(newValue) => setFrommValue(newValue)}
+          onChange={(newValue) => setFromValue(newValue)}
         />
         <DatePicker
           label="To"

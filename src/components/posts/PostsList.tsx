@@ -10,20 +10,32 @@ import {
   CardHeader,
   Chip,
   IconButton,
+  Pagination,
 } from "@mui/material";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { TimeAgo } from "../../utils/TimeAgo";
-import Pagination from "../../utils/PaginationComponent";
 import { ChatBubbleOutlineRounded } from "@mui/icons-material";
 import PostsComment from "./PostsComment";
 import Spinner from "../../utils/Spinner";
+import usePagination from "../../utils/Pagination";
 export type comment = {
   index: number;
   status: boolean;
 };
+
 export default function PostsList() {
   const posts = useAppSelector(selectAllPosts);
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 5;
+
+  const count = Math.ceil(posts.length / PER_PAGE);
+  const _DATA = usePagination(posts, PER_PAGE);
+  console.log(_DATA.currentData())
+  const handleChange = (e: any, p: number) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
   const postStatus = useAppSelector((state) => state.post.status);
   const loggedInUser = localStorage.getItem("user");
   const JsonUser = JSON.parse(loggedInUser ? loggedInUser : "");
@@ -56,7 +68,7 @@ export default function PostsList() {
       <motion.div
         animate={{ y: 10 }}
         transition={{ ease: "easeOut", duration: 2 }}
-        className="bg-gray-70 py-6 sm:py-12"
+        className="bg-gray-90 py-6 sm:py-12"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8 ">
           <div className="mx-auto max-w-2xl lg:mx-0">
@@ -68,7 +80,7 @@ export default function PostsList() {
             <Spinner />
           ) : (
             <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-              {posts.map((post, index) => (
+              {_DATA.currentData().map((post, index) => (
                 <Card
                   sx={{ maxWidth: 1000 }}
                   className="shadow-lg hover:shadow-2xl"
@@ -161,8 +173,13 @@ export default function PostsList() {
           )}
         </div>
         <Pagination
-          count={Math.trunc(posts.length / 5)}
-          allResults={posts.length}
+          sx={{ margin:"auto" }}
+          count={count}
+          size="large"
+          page={page}
+          variant="outlined"
+          shape="rounded"
+          onChange={handleChange}
         />
       </motion.div>
     </>

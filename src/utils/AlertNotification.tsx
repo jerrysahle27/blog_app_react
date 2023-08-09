@@ -33,7 +33,7 @@ function AlertNotification(props: AlertNotificationProps) {
     <>
       <Snackbar
         open={props.openSuccess}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={handleSnackbarClose}
       >
         <Alert

@@ -2,12 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "./components/auth/Login";
 import NotFoundPage from "./error-page/NotFoundPage";
 import Register from "./components/auth/Register";
-import Home from "./components/layout/Home";
-import ProfileTab from "./components/profile/ProfileTab";
-import Posts from "./components/posts/Posts";
+// import Home from "./components/layout/Home";
+// import ProfileTab from "./components/profile/ProfileTab";
+// import Posts from "./components/posts/Posts";
+import ForgotPassword from "./components/auth/ForgotPassword";
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
     errorElement: <NotFoundPage />,
   },
@@ -17,19 +18,9 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
   },
   {
-    path: "/home",
-    element: <Home />,
+    path: "/forgotpassword",
+    element: <ForgotPassword />,
     errorElement: <NotFoundPage />,
-    children: [
-      {
-        path: "/home/posts",
-        element: <Posts />,
-      },
-      {
-        path: "/home/profile",
-        element: <ProfileTab />,
-      },
-    ],
   },
 ]);
 
