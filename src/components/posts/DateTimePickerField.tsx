@@ -11,16 +11,16 @@ export default function DateTimePickerField() {
   const [fromvalue, setFrommValue] = React.useState<Dayjs | null>(null);
   const [tovalue, setToValue] = React.useState<Dayjs | null>(null);
 
-  // React.useEffect(() => {
-  //   if (fromvalue != null && tovalue != null) {
-  //     dispatch(
-  //       filterByDate({
-  //         from: fromvalue,
-  //         to: tovalue,
-  //       })
-  //     );
-  //   }
-  // }, [tovalue, fromvalue, dispatch]);
+  React.useEffect(() => {
+    if (fromvalue != null && tovalue != null) {
+      // dispatch(
+      //   filterByDate({
+      //     from: fromvalue,
+      //     to: tovalue,
+      //   })
+      // );
+    }
+  }, [tovalue, fromvalue, dispatch]);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="content-end space-x-2 ">
